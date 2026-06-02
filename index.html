@@ -4,14 +4,17 @@
 <meta charset="UTF-8">
 <title>For You 🤍</title>
 
+<!-- font aesthetic -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
 <style>
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #e0eafc, #cfdef3);
   overflow: hidden;
 }
 
+/* layout */
 .screen {
   position: absolute;
   width: 100%;
@@ -28,18 +31,53 @@ body {
   pointer-events: none;
 }
 
+/* title */
 h1 {
-  font-weight: 400;
-  color: #333;
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #2c2c2c;
 }
 
+/* button */
 button {
   margin-top: 20px;
-  padding: 10px 20px;
-  border-radius: 20px;
-  border: 1px solid #333;
+  padding: 10px 24px;
+  border-radius: 25px;
+  border: 1px solid #444;
   background: transparent;
   cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+/* text */
+#text {
+  max-width: 420px;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #444;
+  margin-top: 15px;
+}
+
+.fade {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 1s forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* particles */
@@ -56,12 +94,6 @@ button {
 @keyframes float {
   from {transform: translateY(100vh);}
   to {transform: translateY(-10vh);}
-}
-
-#text {
-  max-width: 400px;
-  text-align: center;
-  line-height: 1.6;
 }
 </style>
 </head>
@@ -81,25 +113,36 @@ button {
 </div>
 
 <script>
-const message = "selamat ulang tahun yaa sayang. di usiamu yang baru ini, doaku semoga kamu tumbuh jadi lelaki yang makin dewasa, bijaksana, dan selalu takut akan Tuhan. semoga Tuhan Yesus selalu lancarkan kuliahmu dan bimbing setiap langkahmu menuju masa depan. ​aku juga berdoa buat keluarga kamu, semoga Tuhan selalu beri kesehatan, kedamaian, dan berkat yang melimpah di rumah kalian. dan buat hubungan kita yang baru ini, semoga Tuhan selalu menyertai dan jaga komunikasi kita. semoga ke depannya kita bisa saling mendukung, bertumbuh bareng, dan tetap satu tujuan di dalam Tuhan. God bless you and your family always, ya! 🤍";
+const messages = [
+  "selamat ulang tahun ya, sayang. di usiamu yang baru ini, aku berdoa semoga kamu terus bertumbuh menjadi pribadi yang lebih dewasa, bijaksana, dan selalu mengandalkan Tuhan dalam setiap langkahmu.",
+  
+  "semoga Tuhan Yesus selalu melancarkan kuliahmu dan menuntun masa depanmu dengan baik. aku juga berdoa untuk keluargamu, semoga selalu diberi kesehatan, kedamaian, dan berkat yang melimpah.",
+  
+  "untuk hubungan kita yang baru ini, semoga Tuhan selalu menyertai dan menjaga komunikasi kita. semoga ke depannya kita bisa saling mendukung, bertumbuh bersama, dan tetap berjalan dalam satu tujuan.",
+  
+  "God bless you and your family, always 🤍"
+];
 
-let i = 0;
+let index = 0;
 
 function next() {
   document.getElementById("screen1").classList.add("hidden");
   document.getElementById("screen2").classList.remove("hidden");
-  typeEffect();
+  showNext();
 }
 
-function typeEffect() {
-  if (i < message.length) {
-    document.getElementById("text").innerHTML += message.charAt(i);
-    i++;
-    setTimeout(typeEffect, 40);
+function showNext() {
+  if (index < messages.length) {
+    const p = document.createElement("p");
+    p.className = "fade";
+    p.innerText = messages[index];
+    document.getElementById("text").appendChild(p);
+    index++;
+    setTimeout(showNext, 2000);
   }
 }
 
-/* particles generator */
+/* particles */
 for (let i = 0; i < 40; i++) {
   let p = document.createElement("div");
   p.className = "particle";
